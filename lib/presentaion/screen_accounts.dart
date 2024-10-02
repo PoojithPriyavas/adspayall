@@ -71,6 +71,10 @@ class _ScreenAccountsState extends State<ScreenAccounts> {
           actions: [],
         ),
         body: InAppWebView(
+          initialSettings: InAppWebViewSettings(
+            underPageBackgroundColor: whiteColor,
+            transparentBackground: true,
+          ),
           initialUrlRequest: URLRequest(
             // url: WebUri("https://pub.dev/packages/flutter_inappwebview")),
             url: WebUri.uri(

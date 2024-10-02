@@ -52,6 +52,10 @@ class _ScreenHistoryState extends State<ScreenHistory> {
           actions: [],
         ),
         body: InAppWebView(
+          initialSettings: InAppWebViewSettings(
+            underPageBackgroundColor: whiteColor,
+            transparentBackground: true,
+          ),
           initialUrlRequest: URLRequest(
             url: WebUri.uri(
               Uri.parse(

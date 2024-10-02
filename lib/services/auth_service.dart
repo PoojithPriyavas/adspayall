@@ -57,49 +57,6 @@ class AuthService {
     }
   }
 
-  // Future<RegisterResponse?> createAccount(
-  //     String username, String password) async {
-  //   try {
-  //     final Map<String, dynamic> requestBody = {
-  //       "username": username,
-  //       "password": password
-  //     };
-
-  //     final http.Response response = await http.post(
-  //       Uri.parse(apiUrl),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: jsonEncode(requestBody),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final Map<String, dynamic> responseData = jsonDecode(response.body);
-
-  //       if (responseData['status'] == 201 &&
-  //           responseData['status_message'] == 'success') {
-  //         // Parse the JSON response into a LoginResponse model object
-  //         RegisterResponse registerResponse =
-  //             RegisterResponse.fromJson(responseData);
-
-  //         return registerResponse;
-  //       } else {
-  //         // Handle error response
-  //         print('Error: ${responseData['status_message']}');
-  //         return null;
-  //       }
-  //     } else {
-  //       // Handle server error
-  //       print('Server error with status code: ${response.statusCode}');
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     // Handle exceptions
-  //     print('Failed to login: $e');
-  //     return null;
-  //   }
-  // }
-
   Future<RegisterResponse?> createAccount(
       String username, String password) async {
     try {
@@ -119,7 +76,7 @@ class AuthService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
 
-        print("response is ${responseData['status']}");
+        print("response the is ${responseData['status']}");
 
         if (responseData['status'] == 200) {
           // Registration success
@@ -138,9 +95,12 @@ class AuthService {
           // General error
           print('Error: ${responseData['status_message']}');
           return null;
+        } else {
+          print('Error: ${responseData['status_message']}');
         }
       } else {
         // Handle server error
+
         print('Server error with status code: ${response.statusCode}');
         return null;
       }
@@ -273,6 +233,26 @@ class AuthService {
         } else {
           // Handle unexpected status codes in response data
           print('Unexpected response status: ${responseData['status']}');
+          showCupertinoDialog(
+              context: context,
+              builder: (context) {
+                return CupertinoAlertDialog(
+                  title: const Text('Failed'),
+                  content: Text(
+                      "Unexpected response status: ${responseData['status']}"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'ok',
+                        style: TextStyle(color: blackColor),
+                      ),
+                    )
+                  ],
+                );
+              });
           return false;
         }
       } else {

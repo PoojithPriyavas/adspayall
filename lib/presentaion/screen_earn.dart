@@ -19,26 +19,7 @@ class _ScreenEarnState extends State<ScreenEarn> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _cookieManager = CookieManager.instance();
-    // _setCookie();
   }
-
-  // Function to set cookies
-  // Future<void> _setCookie() async {
-  //   await _cookieManager.setCookie(
-  //     // url: Uri.parse("${ApiEndpoints.startingUrl}dashboard/earn"),
-  //     url: WebUri.uri(
-  //       Uri.parse(
-  //         "https://mobile-adspayall.empyef.com/dashboard/earn",
-  //       ),
-  //     ),
-  //     name: "authToken",
-  //     value: StringConstants.TOKEN_STRING,
-  //     domain:
-  //         "https://mobile-adspayall.empyef.com/dashboard/earn", // Replace with your domain
-  //     path: "/",
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +52,10 @@ class _ScreenEarnState extends State<ScreenEarn> {
           actions: [],
         ),
         body: InAppWebView(
+          initialSettings: InAppWebViewSettings(
+            underPageBackgroundColor: whiteColor,
+            transparentBackground: true,
+          ),
           initialUrlRequest: URLRequest(
             // url: WebUri("https://pub.dev/packages/flutter_inappwebview")),
             url: WebUri.uri(

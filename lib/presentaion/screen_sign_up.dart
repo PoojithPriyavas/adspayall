@@ -266,7 +266,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                         final response = await authService
                                             .createAccount(username, password);
 
-                                        // print("response is $response");
+                                        print("response is the ther $response");
                                       }
                                     } catch (e) {
                                       print("eception is $e");

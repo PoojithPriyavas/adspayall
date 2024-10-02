@@ -1,82 +1,19 @@
-import 'dart:developer';
-import 'dart:isolate';
-import 'dart:ui';
-
 import 'package:ads_pay_all/core/colors.dart';
-import 'package:ads_pay_all/core/shared_pref_data.dart';
 import 'package:ads_pay_all/core/style.dart';
-import 'package:ads_pay_all/presentaion/screen.dart';
 import 'package:ads_pay_all/presentaion/screen_accounts.dart';
 import 'package:ads_pay_all/presentaion/screen_advertise.dart';
 import 'package:ads_pay_all/presentaion/screen_earn.dart';
 import 'package:ads_pay_all/presentaion/screen_history.dart';
-import 'package:ads_pay_all/presentaion/screen_login.dart';
 import 'package:ads_pay_all/presentaion/screen_notifications.dart';
 import 'package:ads_pay_all/presentaion/screen_profile.dart';
 import 'package:ads_pay_all/presentaion/screen_redeem_code.dart';
 import 'package:ads_pay_all/presentaion/widgets/custom_dashboard_button.dart';
 import 'package:ads_pay_all/routes/routes.dart';
 import 'package:ads_pay_all/utils/enums.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 
-class ScreenHome extends StatefulWidget {
+class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
-
-  @override
-  State<ScreenHome> createState() => _ScreenHomeState();
-}
-
-class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
-  // always on display part
-  static const String _kPortNameOverlay = 'OVERLAY';
-  static const String _kPortNameHome = 'UI';
-  final _receivePort = ReceivePort();
-  SendPort? homePort;
-  String? latestMessageFromOverlay;
-  AppLifecycleState? _notification;
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    print("state in the screen home is $state");
-
-    if (state == AppLifecycleState.detached) {
-      // Close the overlay if the app is not visible
-      FlutterOverlayWindow.closeOverlay();
-    }
-    setState(() {
-      _notification = state;
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    if (homePort != null) return;
-    final res = IsolateNameServer.registerPortWithName(
-      _receivePort.sendPort,
-      _kPortNameHome,
-    );
-    log("$res: OVERLAY");
-
-    _receivePort.listen((message) async {
-      log("message from OVERLAY: $message");
-      log("lyfecycle is $_notification");
-      if (message == "Ads") {
-        NavigationHandler.navigateWithAnimation(
-            context, const ScreenEarn(), SlideDirection.slideLeft);
-        log("this is printing - adssss");
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +21,7 @@ class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
     final deviceWidth = MediaQuery.of(context).size.width;
     final safeAreaheight = MediaQuery.of(context).padding.top;
     var aspectRatio = ((deviceWidth / 2) / (deviceHeight / 5)) + 0.1;
-    final SharedPrefData sharedPrefData = SharedPrefData();
+
     return Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
@@ -100,83 +37,7 @@ class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
               ),
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PopupMenuButton(
-                color: whiteColor,
-                padding: const EdgeInsets.all(10),
-                tooltip: 'Menu',
-                child: const Icon(
-                  Icons.more_vert,
-                  size: 28.0,
-                  color: Colors.white,
-                ),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                      child: InkWell(
-                    child: Row(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              // Icons.logout,
-                              CupertinoIcons.square_arrow_right,
-
-                              color: Colors.black54,
-                              size: 22.0,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 10.0,
-                              ),
-                              child: Text("Logout", style: t14RegularBlack),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    onTap: () async {
-                      await sharedPrefData.clearSharedPref();
-                      Navigator.of(context).pushReplacement(CupertinoPageRoute(
-                        builder: (context) {
-                          return ScreenLogin();
-                        },
-                      ));
-                    },
-                  )),
-                  PopupMenuItem(
-                    child: InkWell(
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.settings,
-                                color: Colors.black54,
-                                size: 22.0,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 10.0,
-                                ),
-                                child: Text("Change Password",
-                                    style: t14RegularBlack),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        // Navigator.of(context).push(CupertinoPageRoute(
-                        //     builder: (context) => ChangePassword()));
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
+          actions: [],
         ),
         body: GridView.count(
           crossAxisCount: 2,
@@ -253,8 +114,8 @@ class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
             ),
             CustomDashboardButton(
               callBack: () {
-                // NavigationHandler.navigateWithAnimation(
-                //     context, ScreenEarn(), SlideDirection.slideLeft);
+                NavigationHandler.navigateWithAnimation(
+                    context, ScreenEarn(), SlideDirection.slideLeft);
               },
               label: "FAQs",
               image: "assets/icons/faq.png",

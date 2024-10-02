@@ -19,26 +19,7 @@ class _ScreenProfileState extends State<ScreenProfile> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _cookieManager = CookieManager.instance();
-    // _setCookie();
   }
-
-  // Function to set cookies
-  // Future<void> _setCookie() async {
-  //   await _cookieManager.setCookie(
-  //     // url: Uri.parse("${ApiEndpoints.startingUrl}dashboard/earn"),
-  //     url: WebUri.uri(
-  //       Uri.parse(
-  //         "https://mobile-adspayall.empyef.com/dashboard/earn",
-  //       ),
-  //     ),
-  //     name: "authToken",
-  //     value: StringConstants.TOKEN_STRING,
-  //     domain:
-  //         "https://mobile-adspayall.empyef.com/dashboard/earn", // Replace with your domain
-  //     path: "/",
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +56,14 @@ class _ScreenProfileState extends State<ScreenProfile> {
           width: deviceWidth,
           color: whiteColor,
           child: InAppWebView(
+            initialSettings: InAppWebViewSettings(
+              underPageBackgroundColor: whiteColor,
+              transparentBackground: true,
+            ),
             initialUrlRequest: URLRequest(
-              // url: WebUri("https://pub.dev/packages/flutter_inappwebview")),
               url: WebUri.uri(
                 Uri.parse(
                   "${ApiEndpoints.startingUrl}profile?token=${StringConstants.TOKEN_STRING}",
-                  // "https://adspayall.empyef.com/source/load-all-publisher?token=${StringConstants.TOKEN_STRING}",
                 ),
               ),
             ),

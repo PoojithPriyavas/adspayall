@@ -52,6 +52,10 @@ class _ScreenNotificationsState extends State<ScreenNotifications> {
           actions: [],
         ),
         body: InAppWebView(
+          initialSettings: InAppWebViewSettings(
+            underPageBackgroundColor: whiteColor,
+            transparentBackground: true,
+          ),
           initialUrlRequest: URLRequest(
             url: WebUri.uri(
               Uri.parse(

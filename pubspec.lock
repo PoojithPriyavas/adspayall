@@ -17,6 +17,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  awesome_top_snackbar:
+    dependency: "direct main"
+    description:
+      name: awesome_top_snackbar
+      sha256: a766c4894375a084274a58390b2ee7010ce15dda9bf33c3fac4b9d9c6cbe8582
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
+  bg_launcher:
+    dependency: "direct main"
+    description:
+      name: bg_launcher
+      sha256: "8462333f7a0534cc013dc9e94947db871768a57f513e3aa891661dd408b29c18"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -158,6 +174,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_overlay_window:
+    dependency: "direct main"
+    description:
+      name: flutter_overlay_window
+      sha256: "87a8ed7c47104a9ac1352d081e85304934b3f06ae28507097e49dd5f892e208d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.5"
   flutter_svg:
     dependency: "direct main"
     description:
