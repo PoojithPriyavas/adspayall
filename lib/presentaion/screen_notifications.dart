@@ -38,7 +38,7 @@ class _ScreenNotificationsState extends State<ScreenNotifications> {
             ),
           ),
           title: Text(
-            "History",
+            "Notifications",
             style: t18SemiBoldWhite,
           ),
           flexibleSpace: Container(

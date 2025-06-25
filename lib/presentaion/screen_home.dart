@@ -5,10 +5,10 @@ import 'dart:ui';
 import 'package:ads_pay_all/core/colors.dart';
 import 'package:ads_pay_all/core/shared_pref_data.dart';
 import 'package:ads_pay_all/core/style.dart';
-import 'package:ads_pay_all/presentaion/screen.dart';
 import 'package:ads_pay_all/presentaion/screen_accounts.dart';
 import 'package:ads_pay_all/presentaion/screen_advertise.dart';
 import 'package:ads_pay_all/presentaion/screen_earn.dart';
+import 'package:ads_pay_all/presentaion/screen_forget_password.dart';
 import 'package:ads_pay_all/presentaion/screen_history.dart';
 import 'package:ads_pay_all/presentaion/screen_login.dart';
 import 'package:ads_pay_all/presentaion/screen_notifications.dart';
@@ -19,6 +19,7 @@ import 'package:ads_pay_all/routes/routes.dart';
 import 'package:ads_pay_all/utils/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 
 class ScreenHome extends StatefulWidget {
@@ -69,6 +70,13 @@ class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
             context, const ScreenEarn(), SlideDirection.slideLeft);
         log("this is printing - adssss");
       }
+
+      if (message == "Exit") {
+        // NavigationHandler.navigateWithAnimation(
+        //     context, const ScreenEarn(), SlideDirection.slideLeft);
+        SystemNavigator.pop();
+        log("this is printing - adssss");
+      }
     });
   }
 
@@ -88,6 +96,7 @@ class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
     return Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
+          foregroundColor: whiteColor,
           title: Text(
             "AdsPayAll",
             style: t18SemiBoldWhite,
@@ -147,6 +156,16 @@ class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
                   )),
                   PopupMenuItem(
                     child: InkWell(
+                      onTap: () async {
+                        Navigator.of(context)
+                            .pushReplacement(CupertinoPageRoute(
+                          builder: (context) {
+                            return ScreenForgetPassword(
+                              loggedIn: true,
+                            );
+                          },
+                        ));
+                      },
                       child: Row(
                         children: [
                           Row(
@@ -167,10 +186,6 @@ class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
                           ),
                         ],
                       ),
-                      onTap: () {
-                        // Navigator.of(context).push(CupertinoPageRoute(
-                        //     builder: (context) => ChangePassword()));
-                      },
                     ),
                   ),
                 ],

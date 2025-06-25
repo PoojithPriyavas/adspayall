@@ -1,8 +1,10 @@
 import 'dart:convert'; // For JSON encoding and decoding
 import 'package:ads_pay_all/core/colors.dart';
 import 'package:ads_pay_all/core/shared_pref_data.dart';
+import 'package:ads_pay_all/core/style.dart';
 import 'package:ads_pay_all/model/login_model.dart';
 import 'package:ads_pay_all/model/regster_model.dart';
+import 'package:ads_pay_all/presentaion/screen_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -10,10 +12,14 @@ import 'package:http/http.dart' as http;
 class AuthService {
   final String apiUrl =
       'https://adspayall.empyef.com/source/app-login'; // Replace with your actual API URL
+
+  final String signUpUrl =
+      "https://adspayall.empyef.com/source/register-new-user";
   final SharedPrefData sharedPrefData =
       SharedPrefData(); // Instantiate the SharedPrefData
 
-  Future<LoginResponse?> login(String username, String password) async {
+  Future<LoginResponse?> login(
+      String username, String password, BuildContext context) async {
     try {
       final Map<String, dynamic> requestBody = {
         "username": username,
@@ -42,6 +48,16 @@ class AuthService {
           return loginResponse;
         } else {
           // Handle error response
+
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: whiteColor,
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              "${responseData['status_message']}",
+              textAlign: TextAlign.center,
+              style: t14RegularBlack,
+            ),
+          ));
           print('Error: ${responseData['status_message']}');
           return null;
         }
@@ -58,7 +74,7 @@ class AuthService {
   }
 
   Future<RegisterResponse?> createAccount(
-      String username, String password) async {
+      BuildContext context, String username, String password) async {
     try {
       final Map<String, dynamic> requestBody = {
         "username": username,
@@ -66,7 +82,7 @@ class AuthService {
       };
 
       final http.Response response = await http.post(
-        Uri.parse(apiUrl),
+        Uri.parse(signUpUrl),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -86,10 +102,30 @@ class AuthService {
         } else if (responseData['status'] == 201) {
           // Registered but email failed to send
           print('Registered but email failed to send. Please contact admin.');
+
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: whiteColor,
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              "We have encountered an problem. please contact customer support.\n Error code is ${responseData['status']}",
+              textAlign: TextAlign.center,
+              style: t14RegularBlack,
+            ),
+          ));
           return null;
         } else if (responseData['status'] == 401) {
           // Username/email already exists
           print('Error: Username/email already exists.');
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: whiteColor,
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              "Username/Email already exists.\n Try deferent Username",
+              textAlign: TextAlign.center,
+              style: t14RegularBlack,
+            ),
+          ));
+
           return null;
         } else if (responseData['status'] == 400) {
           // General error

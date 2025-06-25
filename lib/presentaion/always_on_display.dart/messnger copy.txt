@@ -39,7 +39,6 @@ class _MessangerChatHeadState extends State<MessangerChatHead>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     redeemOverlaySelected = false;
-
     _currentShape = BoxShape.circle;
     if (homePort != null) return;
     final res = IsolateNameServer.registerPortWithName(
@@ -106,17 +105,15 @@ class _MessangerChatHeadState extends State<MessangerChatHead>
             });
           }
         },
-        child: AnimatedContainer(
-          // foregroundDecoration: BoxDecoration(colo),
-          duration: const Duration(milliseconds: 200),
+        child: Container(
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            color: Colors.transparent,
+            color: Colors.orange,
             shape: _currentShape,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               redeemOverlaySelected == true
@@ -139,13 +136,9 @@ class _MessangerChatHeadState extends State<MessangerChatHead>
                                       onPressed: () async {
                                         await FlutterOverlayWindow.updateFlag(
                                             OverlayFlag.defaultFlag);
-
-                                        await FlutterOverlayWindow
-                                            .resizeOverlay(50, 100, true);
-
                                         setState(() {
                                           redeemOverlaySelected = false;
-                                          _currentShape = BoxShape.circle;
+                                          _currentShape == BoxShape.circle;
                                         });
                                       },
                                       icon: const Icon(Icons.close))
@@ -319,28 +312,18 @@ class _MessangerChatHeadState extends State<MessangerChatHead>
                           if (redeemOverlaySelected == false) {
                             await FlutterOverlayWindow.updateFlag(
                                 OverlayFlag.focusPointer);
+                            await FlutterOverlayWindow.resizeOverlay(
+                              WindowSize.matchParent,
+                              800,
+                              true,
+                            );
 
                             setState(() {
-                              _currentShape = BoxShape.circle;
+                              redeemOverlaySelected = true;
                             });
 
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () async {
-                                await FlutterOverlayWindow.resizeOverlay(
-                                  300,
-                                  300,
-                                  true,
-                                );
-
-                                setState(() {
-                                  redeemOverlaySelected = true;
-                                });
-
-                                await FlutterOverlayWindow.moveOverlay(
-                                    const OverlayPosition(0, 0));
-                              },
-                            );
+                            await FlutterOverlayWindow.moveOverlay(
+                                const OverlayPosition(0, 0));
                           } else {
                             await FlutterOverlayWindow.resizeOverlay(
                               // deviceWidth.toInt(),

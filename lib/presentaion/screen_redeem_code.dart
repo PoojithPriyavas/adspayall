@@ -2,15 +2,14 @@ import 'dart:developer';
 
 import 'package:ads_pay_all/core/colors.dart';
 import 'package:ads_pay_all/core/constants.dart';
-import 'package:ads_pay_all/core/shared_pref_data.dart';
 import 'package:ads_pay_all/core/strings.dart';
 import 'package:ads_pay_all/core/style.dart';
 import 'package:ads_pay_all/provider/redeem_provider.dart';
 import 'package:ads_pay_all/services/redeem_service.dart';
+import 'package:awesome_top_snackbar/awesome_top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:provider/provider.dart';
-import 'package:awesome_top_snackbar/awesome_top_snackbar.dart';
 
 class ScreenRedeemCode extends StatefulWidget {
   const ScreenRedeemCode({super.key});
@@ -22,6 +21,23 @@ class ScreenRedeemCode extends StatefulWidget {
 class _ScreenRedeemCodeState extends State<ScreenRedeemCode> {
   bool _switch = false;
   bool _redeemClicked = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _checkOverlayStatus(); // Call the async method here
+  }
+
+  Future<void> _checkOverlayStatus() async {
+    final check = await FlutterOverlayWindow.isActive();
+    if (check == true) {
+      setState(() {
+        _switch = check;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -71,6 +87,15 @@ class _ScreenRedeemCodeState extends State<ScreenRedeemCode> {
                     cursorColor: Colors.blueAccent.withOpacity(0.4),
                     controller: redeemProvider.controller,
                     decoration: InputDecoration(
+                      prefixIcon: SizedBox(
+                        // height: 30,
+                        width: 50,
+                        child: Center(
+                            child: Text(
+                          "A\$A",
+                          style: t14RegularBlack,
+                        )),
+                      ),
                       hintText: "Key in the AdsPayAll Code",
                       hintStyle: t12MediumGrey,
                       contentPadding: const EdgeInsets.symmetric(
@@ -116,15 +141,20 @@ class _ScreenRedeemCodeState extends State<ScreenRedeemCode> {
                         if (redeemCode.isEmpty) {
                           log("empty string");
                         } else {
+                          print("redeem code is $redeemCode");
                           setState(() {
                             _redeemClicked = true;
                           });
-                          final response = await redeemService.postApaCode(
+
+                          final response = await redeemService.redeemApacode(
                               redeemCode, StringConstants.TOKEN_STRING);
+                          // final response = await redeemService.postApaCode(
+                          //     redeemCode, StringConstants.TOKEN_STRING);
 
                           setState(() {
                             _redeemClicked = false;
                           });
+                          redeemProvider.clearController();
 
                           if (response == "Success") {
                             awesomeTopSnackbar(
@@ -233,17 +263,13 @@ class _ScreenRedeemCodeState extends State<ScreenRedeemCode> {
                               enableDrag: true,
                               overlayTitle: "X-SLAYER",
                               overlayContent: 'Overlay Enabled',
-                              // flag: OverlayFlag.defaultFlag,
-                              flag: OverlayFlag.focusPointer,
+                              flag: OverlayFlag.defaultFlag,
                               visibility:
                                   NotificationVisibility.visibilityPublic,
-                              // positionGravity: PositionGravity.left,
-                              height: (MediaQuery.of(context).size.height * 0.6)
-                                  .toInt(),
-                              // width: WindowSize.matchParent,
+                              height:
+                                  (MediaQuery.of(context).size.height).toInt(),
                               alignment: OverlayAlignment.centerRight,
                               width: 120,
-                              // startPosition: const OverlayPosition(0, -259),
                             );
                             setState(() {
                               _switch = true;
@@ -300,14 +326,6 @@ class _ScreenRedeemCodeState extends State<ScreenRedeemCode> {
                   )
                 ],
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    final SharedPrefData sharedPrefData = SharedPrefData();
-
-                    final newToken = await sharedPrefData.getToken();
-                    log("token is $newToken");
-                  },
-                  child: Text("data"))
             ],
           ),
         ),

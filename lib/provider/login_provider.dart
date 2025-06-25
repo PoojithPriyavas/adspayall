@@ -25,6 +25,11 @@ class LoginProvider extends ChangeNotifier {
     signupConfirmPasswordController.clear();
   }
 
+  clearSignIn() {
+    usernameController.clear();
+    passwordController.clear();
+  }
+
   // Forget Password section
 
   TextEditingController emailForgetPasswordControler = TextEditingController();

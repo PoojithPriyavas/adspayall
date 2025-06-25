@@ -26,6 +26,7 @@ class ScreenLogin extends StatefulWidget {
 class _ScreenLoginState extends State<ScreenLogin> {
   bool isLoading = false;
   String? errorMessage;
+  bool _hidePassword = true;
 
   SharedPrefData sharedPrefData = SharedPrefData();
 
@@ -34,6 +35,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
     super.initState();
 
     getDateFromPref();
+    _hidePassword = true;
   }
 
   void getDateFromPref() async {
@@ -111,16 +113,29 @@ class _ScreenLoginState extends State<ScreenLogin> {
                               ),
                               kHeight5,
                               CupertinoTextField(
-                                suffix: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.remove_red_eye,
-                                    color: lightGreyColor,
+                                suffix: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _hidePassword == true
+                                            ? _hidePassword = false
+                                            : _hidePassword = true;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _hidePassword == true
+                                          ? Icons.remove_red_eye
+                                          : Icons.password,
+                                      color: lightGreyColor,
+                                    ),
                                   ),
                                 ),
+
                                 // suffixIconColor: blueColor,,
                                 placeholder: "Password",
                                 controller: loginProvider.passwordController,
+                                obscureText: _hidePassword,
 
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
@@ -152,7 +167,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                   ),
                                   GestureDetector(
                                     onTap: () => NavigationHandler.navigateTo(
-                                        context, ScreenForgetPassword()),
+                                        context,
+                                        ScreenForgetPassword(
+                                          loggedIn: false,
+                                        )),
                                     child: Text(
                                       "Forget Password?",
                                       style: t12MediumWhite,
@@ -186,11 +204,24 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                       final password =
                                           loginProvider.passwordController.text;
 
-                                      print('user name  in: $username');
-                                      print('pass name  in: $password');
+                                      if (username.isEmpty ||
+                                          password.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          backgroundColor: whiteColor,
+                                          behavior: SnackBarBehavior.floating,
+                                          showCloseIcon: true,
+                                          duration: const Duration(seconds: 3),
+                                          content: Text(
+                                            "Username and password is needed to continue",
+                                            textAlign: TextAlign.center,
+                                            style: t12MediumBlack,
+                                          ),
+                                        ));
+                                      }
 
                                       final loginResponse = await authService
-                                          .login(username, password);
+                                          .login(username, password, context);
 
                                       setState(() {
                                         isLoading = false;

@@ -16,7 +16,9 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class ScreenForgetPassword extends StatefulWidget {
-  const ScreenForgetPassword({super.key});
+  const ScreenForgetPassword({super.key, required this.loggedIn});
+
+  final bool loggedIn;
 
   @override
   State<ScreenForgetPassword> createState() => _ScreenForgetPasswordState();
@@ -25,6 +27,7 @@ class ScreenForgetPassword extends StatefulWidget {
 class _ScreenForgetPasswordState extends State<ScreenForgetPassword> {
   bool isLoading = false;
   String? errorMessage;
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -129,8 +132,20 @@ class _ScreenForgetPasswordState extends State<ScreenForgetPassword> {
                                             );
                                           });
                                     } else {
-                                      authService.forgetPassword(
-                                          email, context);
+                                      final status = await authService
+                                          .forgetPassword(email, context);
+
+                                      if (widget.loggedIn == false) {
+                                        if (status == true) {
+                                          await loginProvider.clearSignIn();
+                                          NavigationHandler.navigateOff(
+                                              context, ScreenLogin());
+                                        }
+                                      } else {
+                                        if (status == false) {
+                                          NavigationHandler.pop(context);
+                                        }
+                                      }
                                     }
                                   } catch (e) {
                                     print("execption is $e");
@@ -161,7 +176,9 @@ class _ScreenForgetPasswordState extends State<ScreenForgetPassword> {
                                   onTap: () => NavigationHandler.navigateOff(
                                       context, const ScreenLogin()),
                                   child: Text(
-                                    " Login here",
+                                    widget.loggedIn == false
+                                        ? " Login here"
+                                        : " Go Back",
                                     style: t12MediumWhite,
                                     textAlign: TextAlign.center,
                                   ),

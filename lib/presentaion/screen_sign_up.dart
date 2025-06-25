@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ads_pay_all/core/colors.dart';
 import 'package:ads_pay_all/core/constants.dart';
 import 'package:ads_pay_all/core/style.dart';
@@ -18,6 +20,9 @@ class ScreenSignUp extends StatefulWidget {
 }
 
 class _ScreenSignUpState extends State<ScreenSignUp> {
+  bool _hidePassword1 = true;
+  bool _hidePassword2 = true;
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -84,7 +89,25 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                               ),
                               kHeight5,
                               CupertinoTextField(
-                                obscureText: true,
+                                suffix: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _hidePassword1 == true
+                                            ? _hidePassword1 = false
+                                            : _hidePassword1 = true;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _hidePassword1 == true
+                                          ? Icons.remove_red_eye
+                                          : Icons.password,
+                                      color: lightGreyColor,
+                                    ),
+                                  ),
+                                ),
+                                obscureText: _hidePassword1,
                                 controller:
                                     loginProvider.signupPasswordController,
                                 padding: const EdgeInsets.symmetric(
@@ -106,7 +129,25 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                               ),
                               kHeight5,
                               CupertinoTextField(
-                                obscureText: true,
+                                suffix: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _hidePassword2 == true
+                                            ? _hidePassword2 = false
+                                            : _hidePassword2 = true;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _hidePassword2 == true
+                                          ? Icons.remove_red_eye
+                                          : Icons.password,
+                                      color: lightGreyColor,
+                                    ),
+                                  ),
+                                ),
+                                obscureText: _hidePassword2,
                                 controller: loginProvider
                                     .signupConfirmPasswordController,
                                 padding: const EdgeInsets.symmetric(
@@ -183,6 +224,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                           .signupPasswordController.text;
                                       final confirmPassword = loginProvider
                                           .signupConfirmPasswordController.text;
+
+                                      // Regular expression to check if it's a valid email
+                                      final emailRegex = RegExp(
+                                          r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
 
                                       if (password.isEmpty ||
                                           confirmPassword.isEmpty ||
@@ -262,11 +307,69 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                                 ],
                                               );
                                             });
+                                      } else if (!emailRegex
+                                          .hasMatch(username)) {
+                                        showCupertinoDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return CupertinoAlertDialog(
+                                                title: const Text(
+                                                    'Invalid Email id'),
+                                                content: const Text(
+                                                    'Enter valid Email id'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: const Text(
+                                                      'ok',
+                                                      style: TextStyle(
+                                                          color: blackColor),
+                                                    ),
+                                                  )
+                                                ],
+                                              );
+                                            });
                                       } else {
-                                        final response = await authService
-                                            .createAccount(username, password);
+                                        final response =
+                                            await authService.createAccount(
+                                          context,
+                                          username,
+                                          password,
+                                        );
 
-                                        print("response is the ther $response");
+                                        log("response is the ther $response");
+
+                                        if (response != null) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            backgroundColor: whiteColor,
+                                            behavior: SnackBarBehavior.floating,
+                                            showCloseIcon: true,
+                                            duration:
+                                                const Duration(seconds: 3),
+                                            content: Text(
+                                              "An confirmation mail is sent to your registered Email Id.\nConfirm and Login to continue.",
+                                              textAlign: TextAlign.center,
+                                              style: t14RegularBlack,
+                                            ),
+                                          ));
+                                        }
+
+                                        Future.delayed(
+                                            const Duration(seconds: 4),
+                                            () async {
+                                          await loginProvider.clearSignUp();
+                                          Navigator.of(context).pushReplacement(
+                                              CupertinoPageRoute(
+                                            builder: (context) =>
+                                                const ScreenLogin(),
+                                          ));
+                                        });
+
+                                        // if (condition) {}
                                       }
                                     } catch (e) {
                                       print("eception is $e");
