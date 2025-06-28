@@ -8,7 +8,7 @@ import 'package:ads_pay_all/provider/redeem_provider.dart';
 import 'package:ads_pay_all/services/redeem_service.dart';
 import 'package:awesome_top_snackbar/awesome_top_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+// import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:provider/provider.dart';
 
 class ScreenRedeemCode extends StatefulWidget {
@@ -26,17 +26,17 @@ class _ScreenRedeemCodeState extends State<ScreenRedeemCode> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _checkOverlayStatus(); // Call the async method here
+    // _checkOverlayStatus(); // Call the async method here
   }
 
-  Future<void> _checkOverlayStatus() async {
-    final check = await FlutterOverlayWindow.isActive();
-    if (check == true) {
-      setState(() {
-        _switch = check;
-      });
-    }
-  }
+  // Future<void> _checkOverlayStatus() async {
+  //   final check = await FlutterOverlayWindow.isActive();
+  //   if (check == true) {
+  //     setState(() {
+  //       _switch = check;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -227,105 +227,105 @@ class _ScreenRedeemCodeState extends State<ScreenRedeemCode> {
                         : const Text("Redeem"),
                   )),
               kHeight50,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Switch(
-                    // trackColor: const WidgetStatePropertyAll(lightGreyColor),
-                    activeColor: whiteColor,
-                    inactiveThumbColor: whiteColor,
-                    activeTrackColor: Colors.blueAccent.shade200,
-                    inactiveTrackColor: lightGreyColor,
-                    trackOutlineWidth: const WidgetStatePropertyAll(0),
-                    trackOutlineColor: _switch == false
-                        ? const WidgetStatePropertyAll(lightGreyColor)
-                        : WidgetStatePropertyAll(Colors.blueAccent.shade200),
-                    value: _switch,
-                    onChanged: (value) async {
-                      try {
-                        final status =
-                            await FlutterOverlayWindow.isPermissionGranted();
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Switch(
+              //       // trackColor: const WidgetStatePropertyAll(lightGreyColor),
+              //       activeColor: whiteColor,
+              //       inactiveThumbColor: whiteColor,
+              //       activeTrackColor: Colors.blueAccent.shade200,
+              //       inactiveTrackColor: lightGreyColor,
+              //       trackOutlineWidth: const WidgetStatePropertyAll(0),
+              //       trackOutlineColor: _switch == false
+              //           ? const WidgetStatePropertyAll(lightGreyColor)
+              //           : WidgetStatePropertyAll(Colors.blueAccent.shade200),
+              //       value: _switch,
+              //       onChanged: (value) async {
+              //         try {
+              //           final status =
+              //               await FlutterOverlayWindow.isPermissionGranted();
 
-                        print(" statsu si $status");
-                        if (status == true) {
-                          final overlayActive =
-                              await FlutterOverlayWindow.isActive();
+              //           print(" statsu si $status");
+              //           if (status == true) {
+              //             final overlayActive =
+              //                 await FlutterOverlayWindow.isActive();
 
-                          log(" overlay is active or not : $overlayActive");
+              //             log(" overlay is active or not : $overlayActive");
 
-                          if (overlayActive == true) {
-                            await FlutterOverlayWindow.closeOverlay();
-                            setState(() {
-                              _switch = false;
-                            });
-                          } else {
-                            await FlutterOverlayWindow.showOverlay(
-                              enableDrag: true,
-                              overlayTitle: "X-SLAYER",
-                              overlayContent: 'Overlay Enabled',
-                              flag: OverlayFlag.defaultFlag,
-                              visibility:
-                                  NotificationVisibility.visibilityPublic,
-                              height:
-                                  (MediaQuery.of(context).size.height).toInt(),
-                              alignment: OverlayAlignment.centerRight,
-                              width: 120,
-                            );
-                            setState(() {
-                              _switch = true;
-                            });
-                          }
-                        } else {
-                          final bool? res =
-                              await FlutterOverlayWindow.requestPermission();
-                          if (res == true) {
-                            final overlayActive =
-                                await FlutterOverlayWindow.isActive();
+              //             if (overlayActive == true) {
+              //               await FlutterOverlayWindow.closeOverlay();
+              //               setState(() {
+              //                 _switch = false;
+              //               });
+              //             } else {
+              //               await FlutterOverlayWindow.showOverlay(
+              //                 enableDrag: true,
+              //                 overlayTitle: "X-SLAYER",
+              //                 overlayContent: 'Overlay Enabled',
+              //                 flag: OverlayFlag.defaultFlag,
+              //                 visibility:
+              //                     NotificationVisibility.visibilityPublic,
+              //                 height:
+              //                     (MediaQuery.of(context).size.height).toInt(),
+              //                 alignment: OverlayAlignment.centerRight,
+              //                 width: 120,
+              //               );
+              //               setState(() {
+              //                 _switch = true;
+              //               });
+              //             }
+              //           } else {
+              //             final bool? res =
+              //                 await FlutterOverlayWindow.requestPermission();
+              //             if (res == true) {
+              //               final overlayActive =
+              //                   await FlutterOverlayWindow.isActive();
 
-                            log(" overlay is active or not : $overlayActive");
+              //               log(" overlay is active or not : $overlayActive");
 
-                            if (overlayActive == true) {
-                              await FlutterOverlayWindow.closeOverlay();
-                              setState(() {
-                                _switch = false;
-                              });
-                            } else {
-                              await FlutterOverlayWindow.showOverlay(
-                                enableDrag: true,
-                                overlayTitle: "X-SLAYER",
-                                overlayContent: 'Overlay Enabled',
-                                flag: OverlayFlag.defaultFlag,
-                                visibility:
-                                    NotificationVisibility.visibilityPublic,
-                                // positionGravity: PositionGravity.left,
-                                height:
-                                    (MediaQuery.of(context).size.height * 0.6)
-                                        .toInt(),
-                                // width: WindowSize.matchParent,
-                                alignment: OverlayAlignment.centerRight,
-                                width: 100,
-                                // startPosition: const OverlayPosition(0, -259),
-                              );
-                              setState(() {
-                                _switch = true;
-                              });
-                            }
-                          } else {
-                            log("user not given permission");
-                          }
-                        }
-                      } catch (e) {
-                        log("error in the screen redeem code overlay clicked is $e");
-                      }
-                    },
-                  ),
-                  kWidth5,
-                  Text(
-                    "Open floating overlay tool",
-                    style: t14SemiBoldBlack,
-                  )
-                ],
-              ),
+              //               if (overlayActive == true) {
+              //                 await FlutterOverlayWindow.closeOverlay();
+              //                 setState(() {
+              //                   _switch = false;
+              //                 });
+              //               } else {
+              //                 await FlutterOverlayWindow.showOverlay(
+              //                   enableDrag: true,
+              //                   overlayTitle: "X-SLAYER",
+              //                   overlayContent: 'Overlay Enabled',
+              //                   flag: OverlayFlag.defaultFlag,
+              //                   visibility:
+              //                       NotificationVisibility.visibilityPublic,
+              //                   // positionGravity: PositionGravity.left,
+              //                   height:
+              //                       (MediaQuery.of(context).size.height * 0.6)
+              //                           .toInt(),
+              //                   // width: WindowSize.matchParent,
+              //                   alignment: OverlayAlignment.centerRight,
+              //                   width: 100,
+              //                   // startPosition: const OverlayPosition(0, -259),
+              //                 );
+              //                 setState(() {
+              //                   _switch = true;
+              //                 });
+              //               }
+              //             } else {
+              //               log("user not given permission");
+              //             }
+              //           }
+              //         } catch (e) {
+              //           log("error in the screen redeem code overlay clicked is $e");
+              //         }
+              //       },
+              //     ),
+              //     kWidth5,
+              //     Text(
+              //       "Open floating overlay tool",
+              //       style: t14SemiBoldBlack,
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ),

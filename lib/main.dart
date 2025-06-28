@@ -1,4 +1,4 @@
-import 'package:ads_pay_all/presentaion/always_on_display.dart/messnger.dart';
+// import 'package:ads_pay_all/presentaion/always_on_display.dart/messnger.txt';
 import 'package:ads_pay_all/presentaion/screen_login.dart';
 import 'package:ads_pay_all/provider/login_provider.dart';
 import 'package:ads_pay_all/provider/redeem_provider.dart';
@@ -8,24 +8,13 @@ import 'package:provider/provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // runApp(const MyApp());
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => LoginProvider()),
-      ChangeNotifierProvider(create: (context) => RedeemProvider()),
-    ],
-    child: const MyApp(),
-  ));
-}
-
-// overlay entry point
-@pragma("vm:entry-point")
-void overlayMain() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      color: Colors.amber,
-      home: MessangerChatHead(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => RedeemProvider()),
+      ],
+      child: const MyApp(),
     ),
   );
 }

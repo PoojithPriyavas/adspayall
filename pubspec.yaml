@@ -32,15 +32,12 @@ dependencies:
     sdk: flutter
   google_fonts: ^6.2.1
   scrollable_table_view: ^2.0.3
-  quick_nav: ^0.0.3
   flutter_svg: ^2.0.10+1
   provider: ^6.1.2
   http: ^1.2.2
   loading_animation_widget: ^1.2.1
   shared_preferences: ^2.2.3
   flutter_inappwebview: ^6.0.0
-  bg_launcher: ^0.0.1
-  flutter_overlay_window: ^0.4.5
   awesome_top_snackbar: ^0.0.3
   dio:
   

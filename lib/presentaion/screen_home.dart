@@ -20,7 +20,7 @@ import 'package:ads_pay_all/utils/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+// import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
@@ -31,54 +31,54 @@ class ScreenHome extends StatefulWidget {
 
 class _ScreenHomeState extends State<ScreenHome> with WidgetsBindingObserver {
   // always on display part
-  static const String _kPortNameOverlay = 'OVERLAY';
-  static const String _kPortNameHome = 'UI';
-  final _receivePort = ReceivePort();
-  SendPort? homePort;
-  String? latestMessageFromOverlay;
-  AppLifecycleState? _notification;
+  // static const String _kPortNameOverlay = 'OVERLAY';
+  // static const String _kPortNameHome = 'UI';
+  // final _receivePort = ReceivePort();
+  // SendPort? homePort;
+  // String? latestMessageFromOverlay;
+  // AppLifecycleState? _notification;
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   print("state in the screen home is $state");
+
+  //   if (state == AppLifecycleState.detached) {
+  //     // Close the overlay if the app is not visible
+  //     FlutterOverlayWindow.closeOverlay();
+  //   }
+  //   setState(() {
+  //     _notification = state;
+  //   });
+  // }
+
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    print("state in the screen home is $state");
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   WidgetsBinding.instance.addObserver(this);
+  //   if (homePort != null) return;
+  //   final res = IsolateNameServer.registerPortWithName(
+  //     _receivePort.sendPort,
+  //     _kPortNameHome,
+  //   );
+  //   log("$res: OVERLAY");
 
-    if (state == AppLifecycleState.detached) {
-      // Close the overlay if the app is not visible
-      FlutterOverlayWindow.closeOverlay();
-    }
-    setState(() {
-      _notification = state;
-    });
-  }
+  //   _receivePort.listen((message) async {
+  //     log("message from OVERLAY: $message");
+  //     log("lyfecycle is $_notification");
+  //     if (message == "Ads") {
+  //       NavigationHandler.navigateWithAnimation(
+  //           context, const ScreenEarn(), SlideDirection.slideLeft);
+  //       log("this is printing - adssss");
+  //     }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    if (homePort != null) return;
-    final res = IsolateNameServer.registerPortWithName(
-      _receivePort.sendPort,
-      _kPortNameHome,
-    );
-    log("$res: OVERLAY");
-
-    _receivePort.listen((message) async {
-      log("message from OVERLAY: $message");
-      log("lyfecycle is $_notification");
-      if (message == "Ads") {
-        NavigationHandler.navigateWithAnimation(
-            context, const ScreenEarn(), SlideDirection.slideLeft);
-        log("this is printing - adssss");
-      }
-
-      if (message == "Exit") {
-        // NavigationHandler.navigateWithAnimation(
-        //     context, const ScreenEarn(), SlideDirection.slideLeft);
-        SystemNavigator.pop();
-        log("this is printing - adssss");
-      }
-    });
-  }
+  //     if (message == "Exit") {
+  //       // NavigationHandler.navigateWithAnimation(
+  //       //     context, const ScreenEarn(), SlideDirection.slideLeft);
+  //       SystemNavigator.pop();
+  //       log("this is printing - adssss");
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {

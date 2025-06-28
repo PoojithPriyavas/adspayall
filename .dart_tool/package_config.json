@@ -20,12 +20,6 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "bg_launcher",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/bg_launcher-0.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
@@ -99,15 +93,15 @@
     },
     {
       "name": "flutter_inappwebview",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview-6.0.0",
+      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview-6.1.5",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_inappwebview_android",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_android-1.0.13",
+      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_android-1.1.3",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_inappwebview_internal_annotations",
@@ -117,39 +111,39 @@
     },
     {
       "name": "flutter_inappwebview_ios",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_ios-1.0.13",
+      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_ios-1.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_inappwebview_macos",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_macos-1.0.11",
+      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_macos-1.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_inappwebview_platform_interface",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_platform_interface-1.0.10",
+      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_platform_interface-1.3.0+1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_inappwebview_web",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_web-1.0.8",
+      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_web-1.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_inappwebview_windows",
+      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_inappwebview_windows-0.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_lints",
       "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_lints-3.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.1"
-    },
-    {
-      "name": "flutter_overlay_window",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/flutter_overlay_window-0.4.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.16"
     },
     {
       "name": "flutter_svg",
@@ -186,12 +180,6 @@
       "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "js",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/js-0.6.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
     },
     {
       "name": "leak_tracker",
@@ -318,12 +306,6 @@
       "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/provider-6.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "quick_nav",
-      "rootUri": "file:///Users/poojithpriyavas/.pub-cache/hosted/pub.dev/quick_nav-0.0.3",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "scrollable_table_view",
@@ -476,7 +458,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2025-06-25T02:57:13.012446Z",
+  "generated": "2025-06-28T19:36:29.289115Z",
   "generator": "pub",
   "generatorVersion": "3.7.0",
   "flutterRoot": "file:///Users/poojithpriyavas/flutter",
